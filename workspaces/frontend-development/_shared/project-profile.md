@@ -4,20 +4,20 @@ Stable configuration for this project. Complete from [`../setup/questionnaire.md
 
 ## Stack
 
-- Framework and version: Not configured
-- Language and version: Not configured
-- Package manager and version: Not configured
-- Main application entry point: Not configured
+- Framework and version: React 19 with Vite 6
+- Language and version: TypeScript 5.8
+- Package manager and version: Node.js 26.13.0 with npm 11.20.0
+- Main application entry point: `frontend/catalog/src/main.tsx`
 
 ## Commands
 
 Record exact commands as run from the repository root. Mark unavailable checks explicitly; do not claim a check passed if it was not run.
 
-- Install dependencies: Not configured
-- Start development server: Not configured
-- Build: Not configured
+- Install dependencies: `cd frontend/catalog; npm install`
+- Start development server: `cd frontend/catalog; npm run dev`
+- Build: `cd frontend/catalog; npm run build`
 - Lint: Not configured
-- Type-check: Not configured
+- Type-check: `cd frontend/catalog; npm run typecheck`
 - Unit/component tests: Not configured
 - Browser/end-to-end tests: Not configured
 
