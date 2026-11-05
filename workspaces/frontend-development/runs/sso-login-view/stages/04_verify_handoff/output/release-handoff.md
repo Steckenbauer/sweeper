@@ -2,36 +2,34 @@
 
 ## User-visible change
 
-Responsive provider-neutral SSO login view, reusable across host applications through a typed prop interface.
+Responsive, reusable login view with configurable email/password, passkey, common identity-provider, and Estonian TARA options.
 
 ## Acceptance criteria and evidence
 
 | Criterion | How it was checked | Result |
 |---|---|---|
-| Shared component is configurable and provider-neutral | Component API review and rendered default-state assertion | Pass |
-| Callback, loading and announced error states | Render assertions for loading/error; browser Enter activation displays preview error | Pass |
-| Responsive and keyboard usable | Browser measured at 375×812 (page width 375, card x=16..359) and 1280×900 (card width 440); Tab focus is visible with 3px outline | Pass |
-| Build and type-check pass | `npm run build`; `npm run typecheck` | Pass |
+| Host configures app name and enabled methods | Typed component API and SSR assertion for all configured choices | Pass |
+| Password form sends email/password; provider options identify selected method | Component callback implementation; SSR verifies rendered email/password controls and provider labels | Pass |
+| Loading disables actions and errors are announced | Component uses native disabled controls, `aria-busy`, and `role=alert`; build/type-check pass | Pass |
+| Empty method configuration has a clear status | SSR assertion for empty methods | Pass |
+| Build and type-check pass | `npm.cmd run build`; `npm.cmd run typecheck` | Pass |
 
 ## Responsive and accessibility verification
 
-Chrome DevTools Protocol viewport checks confirmed no horizontal overflow at mobile or desktop sizes. Keyboard Tab and Enter operate the native button; focus-visible outline is 3px. The component uses semantic landmarks, a per-instance heading ID, `aria-busy`, an alert region, and reduced-motion support. Screen-reader behavior was not independently tested.
+The view uses semantic landmarks, labels associated with native email/password inputs, native form validation, visible focus styles, disabled states, a live error alert, and reduced-motion support. Browser viewport, keyboard interaction, and screen-reader behavior were not independently checked for this revision.
 
 ## Checks run
 
 | Check or manual steps | Result |
 |---|---|
-| `npm install` | Pass; 71 packages installed, 0 reported vulnerabilities |
-| `npm run build` | Pass |
-| `npm run typecheck` | Pass |
-| Vite SSR render assertions: default, loading, error | Pass |
-| Local development server HTTP smoke check | Pass; HTTP 200 |
-| Browser desktop/mobile bounds and keyboard interaction | Pass |
+| `Push-Location frontend\catalog; npm.cmd run build` | Pass |
+| `Push-Location frontend\catalog; npm.cmd run typecheck` | Pass |
+| Inline Vite SSR assertions for all methods, error alert, inputs, and empty-method state | Pass |
 
 ## Known limitations or risks
 
-No identity provider or real auth behavior is included; each host must provide the sign-in callback and state. Screen-reader testing was not run.
+This is a login UI, not an authentication service and not proof of shared SSO. Each host must enable only configured methods and implement credential verification, provider redirects, secure session handling, and related server-side behavior. Browser and assistive-technology testing was not run for this revision.
 
 ## Handoff decision
 
-Ready for integration as a provider-neutral login view.
+Ready to integrate as a shared login UI; authentication integration remains the responsibility of each host application.

@@ -2,35 +2,34 @@
 
 ## Changed files
 
-- `frontend/catalog/`: Vite React/TypeScript application, reusable SSO view, preview host, responsive CSS module, and npm lockfile.
-- `workspaces/frontend-development/_shared/project-profile.md`: selected stack and available commands.
-- `workspaces/frontend-development/runs/sso-login-view/`: approved feature workflow and evidence.
+- `frontend/catalog/src/components/LoginView/`: reusable login view and isolated CSS module.
+- `frontend/catalog/src/app/App.tsx`: preview host configures the available methods and displays a host-owned not-configured message.
+- `frontend/catalog/src/main.tsx`: imports the app shell from its folder after the component reorganization.
+- `workspaces/frontend-development/runs/sso-login-view/`: updated scope, interface plan, and verification evidence.
 
 ## Implementation decisions
 
-- `SsoLoginView` accepts `applicationName`, `onSignIn`, `isLoading`, and `errorMessage`, leaving provider/auth behavior to the host.
-- Preview host shows an explicit not-configured message after activation; it does not simulate successful sign-in.
-- No external authentication or UI dependencies were introduced.
+- `LoginView` accepts the app name, enabled methods, loading/error state, and a typed callback. Password sign-in calls the host with email/password; each provider/passkey/TARA button passes its method identifier.
+- The view supports password, passkey, Google, Apple, Microsoft, GitHub, Facebook, and Estonian TARA. Hosts choose which methods to expose.
+- Authentication, provider SDKs, redirects, credential verification, and sessions remain host-owned. No external dependencies were added.
+- Empty methods produce a clear status message; input values are local to the view and are not persisted.
 
 ## Checks run
 
-| Check | Exact command | Result |
+| Check | Exact command or method | Result |
 |---|---|---|
-| Install dependencies | `Set-Location frontend\catalog; npm.cmd install` | Pass; 71 packages installed, 0 reported vulnerabilities |
-| Production build | `Set-Location frontend\catalog; npm.cmd run build` | Pass |
-| Type-check | `Set-Location frontend\catalog; npm.cmd run typecheck` | Pass |
-| Component states | Vite SSR assertions for default, error, and loading render | Pass |
-| Browser smoke and responsive layout | Chrome at 375×812 and 1280×900 via CDP; page and card bounds checked | Pass; no horizontal overflow |
-| Keyboard access | CDP Tab focus and Enter activation | Pass; visible 3px focus outline and callback error announcement |
+| Production build | `Push-Location frontend\catalog; npm.cmd run build` | Pass |
+| Type-check | `Push-Location frontend\catalog; npm.cmd run typecheck` | Pass |
+| Rendered UI | Inline Node ESM using Vite `ssrLoadModule` and React `renderToStaticMarkup`; assertions for all configured methods, email/password fields, error alert, and empty-method notice | Pass |
 
 ## Checks not run and why
 
-Screen-reader testing was not run; there is no configured assistive-technology test workflow.
+Browser viewport, keyboard, and screen-reader testing were not run for this revision; no browser test suite or assistive-technology workflow is configured.
 
 ## Remaining risks or follow-up
 
-No identity provider is configured; real host applications must supply the redirect/callback, pending state, and error state.
+The preview host deliberately does not authenticate. Each SaaS host must configure only methods it supports and securely implement the callback, credential handling, provider integration, and session behavior.
 
 ## Stage Check
 
-pass — build and type-check succeeded; browser and component-state checks passed.
+pass — build, type-check, and rendered-markup assertions passed; host-owned authentication limitations are documented.

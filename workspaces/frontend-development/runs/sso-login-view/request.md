@@ -2,15 +2,15 @@
 
 ## User or problem
 
-Users need a consistent, reusable SSO sign-in entry point that can be placed in multiple application contexts.
+Users need one reusable login interface that can present the sign-in methods enabled by different SaaS applications.
 
 ## Requested outcome
 
-Create a polished responsive login view in the project-root frontend catalog, reusable by host applications through configuration and an SSO callback.
+Create a polished, responsive login view in the project-root frontend catalog. It should support email/password, passkeys, common identity providers, and Estonian TARA, with each host application choosing which methods to show and handling authentication through callbacks.
 
 ## Known constraints
 
-Use React, TypeScript, and Vite. Keep identity-provider redirect and authentication wiring in the host application; this change provides the view only.
+Use React, TypeScript, and Vite. This change provides a reusable frontend view only; identity-provider redirects, credential verification, and session management remain in each host application.
 
 ## References
 

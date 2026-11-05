@@ -67,23 +67,48 @@
 }
 
 .loginDescription {
-  margin: 13px 0 28px;
+  margin: 13px 0 24px;
   color: #66748a;
   font-size: 15px;
   line-height: 1.6;
 }
 
-.ssoButton {
+.passwordForm {
+  display: grid;
+}
+
+.fieldLabel {
+  margin: 0 0 7px;
+  color: #34445e;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.input {
+  width: 100%;
+  min-height: 48px;
+  margin-bottom: 18px;
+  padding: 0 13px;
+  border: 1px solid #d8e0ec;
+  border-radius: 9px;
+  color: #17243b;
+  font: inherit;
+  font-size: 15px;
+}
+
+.input:focus-visible {
+  border-color: #315ee8;
+  outline: 3px solid #9db5ff;
+  outline-offset: 2px;
+}
+
+.primaryButton,
+.providerButton {
   display: flex;
   width: 100%;
-  min-height: 54px;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  border: 0;
-  border-radius: 10px;
-  background: #315ee8;
-  color: #fff;
+  min-height: 50px;
   cursor: pointer;
   font: inherit;
   font-size: 15px;
@@ -94,29 +119,71 @@
     box-shadow 140ms ease;
 }
 
-.ssoButton:hover:not(:disabled) {
+.primaryButton {
+  margin-top: 2px;
+  border: 0;
+  border-radius: 10px;
+  background: #315ee8;
+  color: #fff;
+}
+
+.primaryButton:hover:not(:disabled) {
   transform: translateY(-1px);
   background: #244ed1;
   box-shadow: 0 7px 16px rgb(49 94 232 / 22%);
 }
 
-.ssoButton:focus-visible {
+.primaryButton:focus-visible,
+.providerButton:focus-visible {
   outline: 3px solid #9db5ff;
   outline-offset: 3px;
 }
 
-.ssoButton:disabled {
+.primaryButton:disabled,
+.providerButton:disabled {
   cursor: wait;
   opacity: 0.72;
 }
 
-.buttonArrow {
-  width: 18px;
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 1.7;
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0 18px;
+  color: #7b879a;
+  font-size: 12px;
+}
+
+.divider::before,
+.divider::after {
+  height: 1px;
+  flex: 1;
+  background: #e8edf5;
+  content: "";
+}
+
+.providerList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.providerButton {
+  min-height: 46px;
+  padding: 0 10px;
+  border: 1px solid #d8e0ec;
+  border-radius: 9px;
+  background: #fff;
+  color: #34445e;
+}
+
+.providerButton:hover:not(:disabled) {
+  border-color: #9db5ff;
+  background: #f7f9ff;
+}
+
+.providerButton[data-method="tara"] {
+  grid-column: 1 / -1;
 }
 
 .loginError {
@@ -128,6 +195,14 @@
   color: #a32d2d;
   font-size: 14px;
   line-height: 1.5;
+}
+
+.loginNotice {
+  margin: 24px 0 0;
+  color: #66748a;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: center;
 }
 
 .loginFootnote {
@@ -157,7 +232,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ssoButton {
+  .primaryButton,
+  .providerButton {
     transition-duration: 0.01ms;
   }
 }

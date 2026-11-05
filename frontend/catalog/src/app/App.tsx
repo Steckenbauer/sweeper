@@ -1,15 +1,28 @@
 import { useState } from "react";
-import { SsoLoginView } from "../components/SsoLoginView/SsoLoginView";
+import {
+  LoginView,
+  type LoginMethod,
+} from "../components/LoginView/LoginView";
 
 export default function App() {
   const [errorMessage, setErrorMessage] = useState<string>();
 
   return (
-    <SsoLoginView
+    <LoginView
       applicationName="Sweeper"
+      methods={[
+        "password",
+        "passkey",
+        "google",
+        // "apple",
+        // "microsoft",
+        // "github",
+        "facebook",
+        "tara",
+      ]}
       errorMessage={errorMessage}
-      onSignIn={() =>
-        setErrorMessage("Single sign-on is not configured in this preview.")
+      onSignIn={(method: LoginMethod) =>
+        setErrorMessage(`${method} sign-in is not configured in this preview.`)
       }
     />
   );
